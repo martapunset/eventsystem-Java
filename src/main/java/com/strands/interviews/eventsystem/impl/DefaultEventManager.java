@@ -3,8 +3,7 @@ package com.strands.interviews.eventsystem.impl;
 import com.strands.interviews.eventsystem.EventManager;
 import com.strands.interviews.eventsystem.InterviewEvent;
 import com.strands.interviews.eventsystem.InterviewEventListener;
-import com.strands.interviews.eventsystem.events.SimpleEvent;
-import com.strands.interviews.eventsystem.events.SubEvent;
+
 
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class DefaultEventManager implements EventManager
 
     private Collection calculateListeners(Class eventClass)
     {
-        return (Collection) listenersByClass.get(eventClass);
+        return (Collection) listenersByClass.get(eventClass); //array list method
     }
 
     public void registerListener(String listenerKey, InterviewEventListener listener)
@@ -49,10 +48,28 @@ public class DefaultEventManager implements EventManager
             unregisterListener(listenerKey);
 
         Class[] classes = listener.getHandledEventClasses();
-
+        /*
+        ///////////////////////////NEW CODE
+        System.out.println(classes);
+         if (classes == null || classes.length == 0)
+            addToListenerList(null, listener);
+         
+         
+         /////////////////////////////////////////////////////////////best solution
+       /* if (classes.length == 0) {
+            for (Iterator it = listenersByClass.values().iterator(); it.hasNext();)
+            {
+                List list = (List) it.next();
+                list.add(listener);
+            }
+        }
+*/
+/////////////////////////////////////////////////////new CODE
+      //  else {
+               
         for (int i = 0; i < classes.length; i++)
             addToListenerList(classes[i], listener);
-
+     // }
         listeners.put(listenerKey, listener);
     }
 

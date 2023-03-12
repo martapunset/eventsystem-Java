@@ -11,6 +11,25 @@ public class DefaultEventManagerTest
 {
     private EventManager eventManager = new DefaultEventManager();
 
+    
+    @Test
+    public void testSubEventListenersNotified() 
+    {
+      
+        // Create a listener for SimpleEvent
+        EventListenerMock eventListenerMock = new EventListenerMock(new Class[]{SimpleEvent.class});
+        eventManager.registerListener("some.key", eventListenerMock);
+       
+        // Create a new SubEvent and send it to the event manager
+        eventManager.publishEvent(new SubEvent(this));
+
+        // Verify that the SimpleEvent listener was not notified
+        assertFalse(eventListenerMock.isCalled());
+
+    }
+    
+    
+    
     @Test
     public void testPublishNullEvent()
     {
