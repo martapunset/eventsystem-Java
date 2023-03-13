@@ -27,13 +27,19 @@ public class DefaultEventManager implements EventManager
             System.err.println("Null event fired?");
             return;
         }
+        System.out.println("event published");
 
         sendEventTo(event, calculateListeners(event.getClass()));
     }
 
-    private Collection calculateListeners(Class eventClass)
-    {
-        return (Collection) listenersByClass.get(eventClass); //array list method
+    private Collection calculateListeners(Class eventClass)  //Modified
+    {  // System.out.println( (Collection) listenersByClass.get(eventClass));
+       // return (Collection) listenersByClass.get(eventClass); //array list method
+         Collection listeners = (Collection) listenersByClass.get(eventClass);
+    if (listeners == null) {
+        listeners = (Collection) listenersByClass.get(null);
+    }
+    return listeners;
     }
 
     public void registerListener(String listenerKey, InterviewEventListener listener)
@@ -48,28 +54,17 @@ public class DefaultEventManager implements EventManager
             unregisterListener(listenerKey);
 
         Class[] classes = listener.getHandledEventClasses();
-        /*
-        ///////////////////////////NEW CODE
-        System.out.println(classes);
-         if (classes == null || classes.length == 0)
-            addToListenerList(null, listener);
-         
-         
-         /////////////////////////////////////////////////////////////best solution
-       /* if (classes.length == 0) {
-            for (Iterator it = listenersByClass.values().iterator(); it.hasNext();)
-            {
-                List list = (List) it.next();
-                list.add(listener);
-            }
-        }
-*/
-/////////////////////////////////////////////////////new CODE
-      //  else {
-               
-        for (int i = 0; i < classes.length; i++)
-            addToListenerList(classes[i], listener);
-     // }
+        if(classes.length==0){
+                 //adding the listener to listeners List. When we call handle event in +
+                // sendEventTo() it will handle the event as this is in the list
+                 addToListenerList(null, listener);
+          
+        } else     
+            for (int i = 0; i < classes.length; i++){
+               System.out.println("loop clases"+ classes.length);
+               addToListenerList(classes[i], listener);
+        
+     }
         listeners.put(listenerKey, listener);
     }
 

@@ -12,10 +12,14 @@ public class DefaultEventManagerTest
     private EventManager eventManager = new DefaultEventManager();
 
     
+    /**
+     * Task1
+     */
+    
     @Test
-    public void testSubEventListenersNotified() 
+    public void testSubEventListenersNotified()
     {
-      
+
         // Create a listener for SimpleEvent
         EventListenerMock eventListenerMock = new EventListenerMock(new Class[]{SimpleEvent.class});
         eventManager.registerListener("some.key", eventListenerMock);
@@ -28,7 +32,22 @@ public class DefaultEventManagerTest
 
     }
     
+    /**
+     * Task2
+     */
     
+    @Test
+    public void testRegisterListenerwithoutClass() 
+    {   
+        // It registers an eventMockListener returning a classes empty array 
+        EventListenerMock eventListenerMock = new EventListenerMock(new Class[0]);
+        eventManager.registerListener("some.key", eventListenerMock);
+        
+        // Publishes a new Simple event to test if the listeners listens everything.
+        eventManager.publishEvent(new SimpleEvent(this));
+        assertTrue(eventListenerMock.isCalled());
+    }
+
     
     @Test
     public void testPublishNullEvent()
