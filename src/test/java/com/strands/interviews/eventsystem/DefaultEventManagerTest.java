@@ -15,7 +15,6 @@ public class DefaultEventManagerTest
     /**
      * Task1
      */
-    
     @Test
     public void testSubEventListenersNotified()
     {
@@ -35,7 +34,6 @@ public class DefaultEventManagerTest
     /**
      * Task2
      */
-    
     @Test
     public void testRegisterListenerwithoutClass() 
     {   

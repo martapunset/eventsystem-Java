@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.strands.interviews.eventsystem.DefaultEventManagerTest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.068 sec
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 sec
->>>>>>> 66db683bc2aa875ffe67985e92b7f5b012854619
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.113 sec

@@ -31,7 +31,7 @@ public class DefaultEventManager implements EventManager
 
         sendEventTo(event, calculateListeners(event.getClass()));
     }
-<<<<<<< HEAD
+
     
     /**
      *  Added new condition to also retrieve the special listeners with null class
@@ -43,19 +43,9 @@ public class DefaultEventManager implements EventManager
             listeners = (Collection) listenersByClass.get(null);
         }
         return listeners;
-=======
 
-    private Collection calculateListeners(Class eventClass)  //Modified
-    {  // System.out.println( (Collection) listenersByClass.get(eventClass));
-       // return (Collection) listenersByClass.get(eventClass); //array list method
-         Collection listeners = (Collection) listenersByClass.get(eventClass);
-    if (listeners == null) {
-        listeners = (Collection) listenersByClass.get(null);
     }
-    return listeners;
->>>>>>> 66db683bc2aa875ffe67985e92b7f5b012854619
-    }
-
+   
     public void registerListener(String listenerKey, InterviewEventListener listener)
     {
         if (listenerKey == null || listenerKey.equals(""))
@@ -68,7 +58,7 @@ public class DefaultEventManager implements EventManager
             unregisterListener(listenerKey);
 
         Class[] classes = listener.getHandledEventClasses();
-<<<<<<< HEAD
+
         
         /**
          *  Adding the listener to listeners List. When we call handle event
@@ -80,20 +70,8 @@ public class DefaultEventManager implements EventManager
         else     
             for (int i = 0; i < classes.length; i++)
                 addToListenerList(classes[i], listener);
-          
-=======
-        if(classes.length==0){
-                 //adding the listener to listeners List. When we call handle event in +
-                // sendEventTo() it will handle the event as this is in the list
-                 addToListenerList(null, listener);
-          
-        } else     
-            for (int i = 0; i < classes.length; i++){
-               System.out.println("loop clases"+ classes.length);
-               addToListenerList(classes[i], listener);
         
-     }
->>>>>>> 66db683bc2aa875ffe67985e92b7f5b012854619
+
         listeners.put(listenerKey, listener);
     }
 
