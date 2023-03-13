@@ -30,10 +30,17 @@ public class DefaultEventManager implements EventManager
 
         sendEventTo(event, calculateListeners(event.getClass()));
     }
-
-    private Collection calculateListeners(Class eventClass)
-    {
-        return (Collection) listenersByClass.get(eventClass); //array list method
+    
+    /**
+     *  Added new condition to also retrieve the special listeners with null class
+     */
+    private Collection calculateListeners(Class eventClass)  
+    {  
+        Collection listeners = (Collection) listenersByClass.get(eventClass);
+        if (listeners == null) {
+            listeners = (Collection) listenersByClass.get(null);
+        }
+        return listeners;
     }
 
     public void registerListener(String listenerKey, InterviewEventListener listener)
@@ -48,28 +55,18 @@ public class DefaultEventManager implements EventManager
             unregisterListener(listenerKey);
 
         Class[] classes = listener.getHandledEventClasses();
-        /*
-        ///////////////////////////NEW CODE
-        System.out.println(classes);
-         if (classes == null || classes.length == 0)
+        
+        /**
+         *  Adding the listener to listeners List. When we call handle event
+         *   in sendEventTo() it will handle the event if this is in the list
+        */
+        if(classes.length==0)
             addToListenerList(null, listener);
-         
-         
-         /////////////////////////////////////////////////////////////best solution
-       /* if (classes.length == 0) {
-            for (Iterator it = listenersByClass.values().iterator(); it.hasNext();)
-            {
-                List list = (List) it.next();
-                list.add(listener);
-            }
-        }
-*/
-/////////////////////////////////////////////////////new CODE
-      //  else {
-               
-        for (int i = 0; i < classes.length; i++)
-            addToListenerList(classes[i], listener);
-     // }
+          
+        else     
+            for (int i = 0; i < classes.length; i++)
+                addToListenerList(classes[i], listener);
+          
         listeners.put(listenerKey, listener);
     }
 
